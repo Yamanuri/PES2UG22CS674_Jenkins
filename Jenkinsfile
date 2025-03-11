@@ -5,7 +5,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'cd main && g++ -o build_output main.cpp'
+                    sh '''
+                        echo "Current workspace: $(pwd)"
+                        ls -la  # Debugging: List files in the workspace
+                        g++ -o build_output main.cpp
+                    '''
                 }
             }
         }
@@ -13,7 +17,10 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'cd main && chmod +x build_output && ./build_output'
+                    sh '''
+                        chmod +x build_output
+                        ./build_output
+                    '''
                 }
             }
         }
